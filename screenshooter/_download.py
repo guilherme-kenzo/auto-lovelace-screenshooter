@@ -36,3 +36,4 @@ def _extract_driver(file_path: str) -> None:
     file = tarfile.open(file_path, "r:gz")
     file.extractall(BASE_DIR)
     file.close()
+

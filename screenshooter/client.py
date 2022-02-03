@@ -1,6 +1,7 @@
 from .config import BASE_DIR
 from ._download import download_driver_if_not_exists
 from selenium import webdriver
+from Screenshot import Screenshot_Clipping
 import os
 
 
@@ -29,5 +30,9 @@ class ScreenshotClient:
     def _locate_elem(self, xpath):
         return self.driver.find_element_by_xpath(xpath)
 
-    def take_screenshot(self, xpath: str = None) -> None:
-        pass
+    def take_screenshot(self, xpath: str = None, output: str=None) -> None:
+        elem = self._locate_elem(xpath)
+        required_width = self.driver.execute_script('return document.body.parentNode.scrollWidth')
+        required_height = self.driver.execute_script('return document.body.parentNode.scrollHeight')
+        self.driver.set_window_size(required_width, required_height)
+        self.driver.find_element_by_tag_name('body').screenshot(output)
